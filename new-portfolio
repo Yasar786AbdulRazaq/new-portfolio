@@ -1,0 +1,426 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
+import {
+    Code,
+    Cpu,
+    Zap,
+    Users,
+    Briefcase,
+    GraduationCap,
+    Mail,
+    Linkedin,
+    MapPin,
+} from 'lucide-react';
+
+// --- Helper Components ---
+
+/**
+ * Animated Section Wrapper
+ * Wraps sections with consistent fade-in and slide-in animations.
+ */
+const Section: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => (
+    <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        viewport={{ once: true }} // Only animate once
+        className={cn('py-12', className)}
+    >
+        <div className="container mx-auto px-4">{children}</div>
+    </motion.section>
+);
+
+/**
+ * Reusable Card Component with hover effects
+ */
+const ServiceCard: React.FC<{
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    technologies?: string[]; // Optional prop for technologies
+    link?: string;      // Optional prop for external link
+}> = ({ title, description, icon, technologies, link }) => {
+    const content = (
+        <Card className="overflow-hidden border-gray-800 bg-gradient-to-br from-gray-950 to-gray-900
+                       transition-all duration-300 group"> {/* Added group for child hover effects */}
+            <CardHeader>
+                <div className="flex items-center gap-4">
+                    {icon}
+                    <CardTitle className="text-xl font-semibold text-white">{title}</CardTitle>
+                </div>
+            </CardHeader>
+            <CardContent>
+                <CardDescription className="text-gray-300 mb-4">{description}</CardDescription>
+                {technologies && (
+                    <div className="flex flex-wrap gap-2">
+                        {technologies.map((tech, index) => (
+                            <Badge
+                                key={index}
+                                variant="secondary"
+                                className="bg-blue-500/20 text-blue-300 border-blue-500/30
+                                           group-hover:bg-blue-500/30 group-hover:text-blue-200
+                                           transition-colors duration-200" // Added hover effect
+                            >
+                                {tech}
+                            </Badge>
+                        ))}
+                    </div>
+                )}
+            </CardContent>
+        </Card>
+    );
+
+    return link ? (
+        <a href={link} target="_blank" rel="noopener noreferrer" className="block">
+            {content}
+        </a>
+    ) : (
+        content
+    );
+};
+
+/**
+ * Component for displaying work experience
+ */
+const ExperienceCard: React.FC<{
+    title: string;
+    company: string;
+    date: string;
+    description: string;
+    technologies: string[];
+}> = ({ title, company, date, description, technologies }) => (
+    <Card className="bg-gray-950 border-gray-800 group transition-all duration-200
+                   hover:bg-gray-800/80 hover:border-gray-700">
+        <CardHeader>
+            <CardTitle className="text-lg font-semibold text-white">{title}</CardTitle>
+            <CardDescription className="text-gray-400">{company} - {date}</CardDescription>
+        </CardHeader>
+        <CardContent>
+            <p className="text-gray-300 mb-4">{description}</p>
+            <div className="flex flex-wrap gap-2">
+                {technologies.map((tech, index) => (
+                    <Badge
+                        key={index}
+                        variant="secondary"
+                        className="bg-purple-500/20 text-purple-300 border-purple-500/30
+                                   group-hover:bg-purple-500/30 group-hover:text-purple-200
+                                   transition-colors duration-200" // Added hover effect
+                    >
+                        {tech}
+                    </Badge>
+                ))}
+            </div>
+        </CardContent>
+    </Card>
+);
+
+/**
+ * Component for displaying education details
+ */
+const EducationCard: React.FC<{
+    degree: string;
+    institution: string;
+    date: string;
+    description?: string; // Optional description
+}> = ({ degree, institution, date, description }) => (
+    <Card className="bg-gray-950 border-gray-800 group transition-all duration-200
+                   hover:bg-gray-800/80 hover:border-gray-700">
+        <CardHeader>
+            <CardTitle className="text-lg font-semibold text-white">{degree}</CardTitle>
+            <CardDescription className="text-gray-400">{institution} - {date}</CardDescription>
+        </CardHeader>
+        {description && (
+            <CardContent>
+                <p className="text-gray-300">{description}</p>
+            </CardContent>
+        )}
+    </Card>
+);
+
+/**
+ * Component for displaying a single skill
+ */
+const SkillBadge: React.FC<{ skill: string }> = ({ skill }) => (
+    <Badge
+        variant="secondary"
+        className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30
+                   hover:bg-emerald-500/30 hover:text-emerald-200
+                   transition-colors duration-200" // Added hover effect
+    >
+        {skill}
+    </Badge>
+);
+
+// --- Main Component ---
+
+const YasarAbdulRazaq = () => {
+    return (
+        <div className="bg-blue-950 min-h-screen"> {/* Changed background color here */}
+            {/* --- Hero Section --- */}
+            <Section className="text-center py-20 bg-gradient-to-br from-blue-900 via-purple-900 to-black">  {/* Changed gradient */}
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeInOut' }}
+                >
+                    <h1
+                        className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent
+                                   bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-4"
+                    >
+                        Yasar Abdul Razaq
+                    </h1>
+                    <p className="text-lg sm:text-xl text-gray-300 mb-8">
+                        Versatile Full-Stack Developer | Agentic AI Specialist
+                    </p>
+                    <Button
+                        variant="outline"
+                        size="lg"
+                        className="bg-gradient-to-r from-blue-500/20 to-purple-500/20
+                                   text-white border-blue-500/30 hover:border-purple-500/30
+                                   hover:from-blue-500/30 hover:to-purple-500/30
+                                   transition-all duration-300 shadow-lg hover:shadow-blue-500/20
+                                   hover:scale-105" // Added hover scale
+                    >
+                        <Mail className="mr-2 h-5 w-5" />
+                        Contact Me
+                    </Button>
+                </motion.div>
+            </Section>
+
+            {/* --- Summary Section --- */}
+            <Section>
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 className="text-3xl font-semibold text-white mb-4">Summary</h2>
+                        <p className="text-gray-300 leading-relaxed">
+                            I am a passionate and certified Agentic and Robotic AI Engineer with a strong background
+                            in full-stack development. My expertise includes building cutting-edge solutions with
+                            Next.js, React.js, Python, and FastAPI, with a specialization in developing AI-powered
+                            applications using LangChain, LangGraph, CrewAI, and the OpenAI SDK. I am committed
+                            to driving innovation in AI and robotics.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        <img
+                            src="https://placehold.co/400x400/EEE/31343C" // Replace with actual image URLs
+                            alt="Profile 1"
+                            className="rounded-lg shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300" // Added hover
+                        />
+                        <img
+                            src="https://placehold.co/400x400/EEE/31343C"
+                            alt="Profile 2"
+                            className="rounded-lg shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300"  // Added hover
+                        />
+                        <img
+                            src="https://placehold.co/400x400/EEE/31343C"
+                            alt="Profile 3"
+                            className="rounded-lg shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300"  // Added hover
+                        />
+                        <img
+                            src="https://placehold.co/400x400/EEE/31343C"
+                            alt="Profile 4"
+                            className="rounded-lg shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300"  // Added hover
+                        />
+                    </div>
+                </div>
+            </Section>
+
+            {/* --- Skills Section --- */}
+            <Section className="bg-blue-900">  {/* Changed background color here */}
+                <h2 className="text-3xl font-semibold text-white mb-8 text-center">Top Skills</h2>
+                <div className="flex flex-wrap justify-center gap-4">
+                    <SkillBadge skill="Next.js" />
+                    <SkillBadge skill="React.js" />
+                    <SkillBadge skill="Python" />
+                    <SkillBadge skill="FastAPI" />
+                    <SkillBadge skill="LangChain" />
+                    <SkillBadge skill="LangGraph" />
+                    <SkillBadge skill="CrewAI" />
+                    <SkillBadge skill="OpenAI SDK" />
+                    <SkillBadge skill="TypeScript" />
+                    <SkillBadge skill="TailwindCSS" />
+                    <SkillBadge skill="Shadcn/UI" />
+                    <SkillBadge skill="JavaScript" />
+                    <SkillBadge skill="GPT Agents" />
+                </div>
+            </Section>
+
+            {/* --- Services Section --- */}
+            <Section>
+                <h2 className="text-3xl font-semibold text-white mb-8 text-center">My Services</h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <ServiceCard
+                        title="Web Development"
+                        description="Building responsive and dynamic web applications using Next.js, React.js, and modern technologies."
+                        icon={<Code className="h-8 w-8 text-blue-400" />}
+                        technologies={['Next.js', 'React.js', 'TypeScript', 'TailwindCSS']}
+                    />
+                    <ServiceCard
+                        title="Backend Development"
+                        description="Designing and implementing robust and scalable APIs using Python and FastAPI."
+                        icon={<Cpu className="h-8 w-8 text-green-400" />}
+                        technologies={['Python', 'FastAPI', 'SQL', 'NoSQL']}
+                    />
+                    <ServiceCard
+                        title="AI Solutions Development"
+                        description="Developing cutting-edge AI solutions using LangChain, LangGraph, CrewAI, and OpenAI SDK."
+                        icon={<Zap className="h-8 w-8 text-yellow-400" />}
+                        technologies={['LangChain', 'LangGraph', 'CrewAI', 'OpenAI SDK']}
+                    />
+                    <ServiceCard
+                        title="Custom GPT Agents"
+                        description="Creating custom GPT-based AI agents for various applications."
+                        icon={<Users className="h-8 w-8 text-purple-400" />}
+                        technologies={['GPT', 'Prompt Engineering', 'Automation']}
+                    />
+                </div>
+            </Section>
+
+            {/* --- Experience Section --- */}
+            <Section className="bg-blue-900">  {/* Changed background color here */}
+                <h2 className="text-3xl font-semibold text-white mb-8 text-center">Experience</h2>
+                <div className="space-y-8">
+                    <ExperienceCard
+                        title="Frontend Developer"
+                        company="CodeAlpha"
+                        date="July 2024 - July 2024"
+                        description="Developed frontend solutions, integrating GPT and prompt engineering techniques."
+                        technologies={['Next.js', 'React.js', 'JavaScript', 'GPT']}
+                    />
+                    {/* Add more experience entries here */}
+                </div>
+            </Section>
+
+            {/* --- Education Section --- */}
+            <Section>
+                <h2 className="text-3xl font-semibold text-white mb-8 text-center">Education</h2>
+                <div className="space-y-8">
+                    <EducationCard
+                        degree="Bachelor of Science in Computer Science (BSCS)"
+                        institution="Virtual University of Pakistan (VU)"
+                        date="December 2021 - December 2025"
+                        description="Currently pursuing degree with a focus on AI and full-stack development."
+                    />
+                    <EducationCard
+                        degree="Prompt Engineering for ChatGPT"
+                        institution="Great Learning"
+                        date="July 2024"
+                    />
+                    <EducationCard
+                        degree="AI & Metaverse & Web3.O & BlockChain"
+                        institution="PIAIC"
+                        date="June 2023"
+                    />
+                    <EducationCard
+                        degree="Design App, UI/UX Design"
+                        institution="Great Learning"
+                        date="June 2024"
+                    />
+                    <EducationCard
+                        degree="Intermediate in Computer Science"
+                        institution="Bise Lahore"
+                        date="2018-2020"
+                    />
+                </div>
+            </Section>
+
+            {/* --- Contact Section --- */}
+            <Section className="bg-blue-900">  {/* Changed background color here */}
+                <h2 className="text-3xl font-semibold text-white mb-8 text-center">Contact</h2>
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p className="text-gray-300 mb-4">
+                            I am eager to connect and discuss potential collaborations or opportunities.
+                            Feel free to reach out to me through the following channels:
+                        </p>
+                        <ul className="space-y-2">
+                            <li className="flex items-center gap-2 text-gray-400">
+                                <MapPin className="h-5 w-5" />
+                                Narang Mandi Tahseel Muridky, District Sheikhupura Lahore Punjab, Pakistan
+                            </li>
+                            <li className="flex items-center gap-2 text-gray-400">
+                                <Mail className="h-5 w-5" />
+                                yasardeveloper786@gmail.com
+                            </li>
+                            <li className="flex items-center gap-2">
+                                <Linkedin className="h-5 w-5 text-blue-400" />
+                                <a
+                                    href="https://www.linkedin.com/in/yasarabdulrazaq"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-400 hover:underline"
+                                >
+                                    www.linkedin.com/in/yasarabdulrazaq
+                                </a>
+                            </li>
+                            <li className="flex items-center gap-2 text-gray-400">
+                                <span className="font-semibold">Phone:</span>
+                                +92 3419785494
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        {/* Contact Form (Placeholder) */}
+                        <Card className="bg-gray-800 border-gray-700">
+                            <CardHeader>
+                                <CardTitle className="text-white">Send a Message</CardTitle>
+                                <CardDescription className="text-gray-400">
+                                    Please fill out the form below to get in touch.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <form className="space-y-4">
+                                    <div>
+                                        <label htmlFor="name" className="block text-sm font-medium text-gray-300">Name</label>
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            placeholder="Your Name"
+                                            className="mt-1 p-2 w-full bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="email" className="block text-sm font-medium text-gray-300">Email</label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            placeholder="Your Email"
+                                            className="mt-1 p-2 w-full bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="message" className="block text-sm font-medium text-gray-300">Message</label>
+                                        <textarea
+                                            id="message"
+                                            placeholder="Your Message"
+                                            rows={4}
+                                            className="mt-1 p-2 w-full bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                                        ></textarea>
+                                    </div>
+                                    <Button
+                                        type="submit"
+                                        className="w-full bg-blue-500 text-white hover:bg-blue-600 transition-colors duration-300
+                                                   hover:scale-105" // Added hover scale
+                                    >
+                                        Send Message
+                                    </Button>
+                                </form>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+            </Section>
+
+            {/* --- Footer --- */}
+            <footer className="bg-blue-900 text-gray-400 text-center py-6 border-t border-gray-800">  {/* Changed background color here */}
+                <p>&copy; {new Date().getFullYear()} Yasar Abdul Razaq. All rights reserved.</p>
+            </footer>
+        </div>
+    );
+};
+
+export default YasarAbdulRazaq;
